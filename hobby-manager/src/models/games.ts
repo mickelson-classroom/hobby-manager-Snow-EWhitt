@@ -1,11 +1,11 @@
-export interface game {
+export interface IGame {
   id: string;
   title: string;
   releaseYear: number;
   genre: string;
 }
 
-export const games: game[] = [
+export const listOfGames: IGame[] = [
   {
     id: '0',
     title: 'Minecraft',

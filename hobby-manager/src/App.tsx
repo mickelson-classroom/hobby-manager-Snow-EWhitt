@@ -1,12 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
+import Root from './routes/root';
+import ErrorPage from './pages/ErrorPage';
+import { GameItem } from './routes/GameItem';
+import { GamesList } from './routes/GamesList';
+import ErrorBoundary from './pages/ErrorBoundary';
 
-function App() {
+export const App = () => {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "/",
+          element: <ErrorBoundary><GamesList /></ErrorBoundary>,
+        },
+        {
+          path: "games/:gameId",
+          element: <ErrorBoundary><GameItem /></ErrorBoundary>,
+        },
+      ],
+    },
+  ]);
+
   return (
-    <>
-      <p>Hello, world!</p>
-    </>
+    <div className="App">
+      <RouterProvider router={router} />
+    </div>
   );
 }
 

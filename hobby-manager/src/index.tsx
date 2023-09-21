@@ -5,36 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap";
 import "./assests/custom.scss";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root from "./routes/root";
-import ErrorPage from "./pages/ErrorPage";
-import { Game } from "./routes/game";
-import Games from "./routes/Games";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "games",
-        element: <Games />
-      },
-      {
-        path: "games/:gameId",
-        element: <Game />,
-      },
-    ],
-  },
-]);
+import ErrorBoundary from "./pages/ErrorBoundary";
+import GameContextProvider from "./context/gameContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <GameContextProvider>  
+      <App />
+    </GameContextProvider>
   </React.StrictMode>
 );
 
