@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import { GameContext, GameContextType } from "../context/gameContext";
 import { useContext, useMemo, useState } from "react";
 import { FilterInput, useFilterInput } from "../components/FilterInput";
-import { IGame } from "../models/games";
 
 export const GamesList = () => {
-  const [formData, setFormData] = useState<IGame | {}>();
+  const [title, setTitle] = useState<string>("");
+  const [release, setRelease] = useState<string>("");
+  const [genre, setGenre] = useState<string>("");
 
   const { games, addGame } = useContext(GameContext) as GameContextType;
   const filterControl = useFilterInput();
@@ -20,17 +21,17 @@ export const GamesList = () => {
     [games, filterControl.filterValue]
   );
 
-  const handleForm = (e: React.FormEvent<HTMLInputElement>): void => {
-    setFormData({
-      ...formData,
-      [e.currentTarget.id]: e.currentTarget.value,
+  const handleGameSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    addGame({
+      id: "",
+      title: title,
+      releaseYear: parseInt(release),
+      genre: genre,
     });
   };
 
-  const handleGameSubmit = (e: React.FormEvent, formData: IGame | any) => {
-    e.preventDefault();
-    addGame(formData);
-  };
+  // throw new Error("Error has appeared!");
 
   return (
     <div className="container">
@@ -39,7 +40,6 @@ export const GamesList = () => {
           <FilterInput inputBar={filterControl} />
         </div>
       </div>
-      {/* <button onClick={() => {throw new Error("this is an error")}}>Click Me!</button> */}
       <div className="d-flex flex-wrap m-3">
         {filteredGames.map((g) => (
           <Link
@@ -57,7 +57,7 @@ export const GamesList = () => {
         ))}
       </div>
       <div className="text-start">
-        <form className="form" onSubmit={(e) => handleGameSubmit(e, formData)}>
+        <form className="form">
           <div className="my-2">
             <label htmlFor="titleInput" className="form-label">
               Title
@@ -66,7 +66,8 @@ export const GamesList = () => {
               id="titleInput"
               type="text"
               className="form-control"
-              onChange={handleForm}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <div className="my-2">
@@ -76,7 +77,7 @@ export const GamesList = () => {
             <input
               id="releaseInput"
               className="form-control"
-              onChange={handleForm}
+              onChange={(e) => setRelease(e.target.value)}
             />
           </div>
           <div className="mt-2 mb-4">
@@ -87,10 +88,14 @@ export const GamesList = () => {
               id="genreInput"
               type="text"
               className="form-control"
-              onChange={handleForm}
+              onChange={(e) => setGenre(e.target.value)}
             />
           </div>
-          <button type="submit" className="btn btn-primary text-white">
+          <button
+            type="submit"
+            className="btn btn-primary text-white"
+            onClick={(e) => handleGameSubmit(e)}
+          >
             Submit
           </button>
         </form>

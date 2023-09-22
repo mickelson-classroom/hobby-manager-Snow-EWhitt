@@ -28,6 +28,7 @@ const GameContextProvider: FC<{ children: ReactNode }> = ({
       releaseYear: g.releaseYear,
       genre: g.genre,
     }
+    console.log(newGame);
     setGameIndex(i => i + 1)
     setGames([...games, newGame])
   }

@@ -1,25 +1,33 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import './App.css';
-import Root from './routes/root';
-import ErrorPage from './pages/ErrorPage';
-import { GameItem } from './routes/GameItem';
-import { GamesList } from './routes/GamesList';
-import ErrorBoundary from './pages/ErrorBoundary';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import "./App.css";
+import Root from "./routes/root";
+import ErrorPage from "./pages/ErrorPage";
+import { GameItem } from "./routes/GameItem";
+import { GamesList } from "./routes/GamesList";
+import ErrorBoundary from "./pages/ErrorBoundary";
 
 export const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Root />,
-      errorElement: <ErrorPage />,
+      // errorElement: <ErrorPage />,
       children: [
         {
           path: "/",
-          element: <ErrorBoundary><GamesList /></ErrorBoundary>,
+          element: (
+            <ErrorBoundary>
+              <GamesList />
+            </ErrorBoundary>
+          ),
         },
         {
           path: "games/:gameId",
-          element: <ErrorBoundary><GameItem /></ErrorBoundary>,
+          element: (
+            <ErrorBoundary>
+              <GameItem />
+            </ErrorBoundary>
+          ),
         },
       ],
     },
@@ -27,9 +35,11 @@ export const App = () => {
 
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <ErrorBoundary>
+        <RouterProvider router={router} />
+      </ErrorBoundary>
     </div>
   );
-}
+};
 
 export default App;
