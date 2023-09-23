@@ -1,11 +1,10 @@
 import { useParams } from "react-router-dom";
-import { IGame } from "../models/games";
-import { GameContext, GameContextType } from "../context/gameContext";
+import { GameContext, GameContextType } from "../context/GameContext";
 import { useContext } from 'react';
 
 export const GameItem = () => {
   const { gameId } = useParams();
-  const { games, addGame } = useContext(GameContext) as GameContextType;
+  const { games } = useContext(GameContext) as GameContextType;
   
   const selectedGame = games.find((g) => g.id === gameId);
 

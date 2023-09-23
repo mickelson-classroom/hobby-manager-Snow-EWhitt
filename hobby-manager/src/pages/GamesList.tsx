@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import { GameContext, GameContextType } from "../context/gameContext";
+import { GameContext, GameContextType } from "../context/GameContext";
 import { useContext, useMemo, useState } from "react";
 import { FilterInput, useFilterInput } from "../components/FilterInput";
+import ToastList from "../components/ToastList/ToastList";
+import { ToastContext, ToastContextType } from "../context/ToastContext";
 
 export const GamesList = () => {
   const [title, setTitle] = useState<string>("");
@@ -9,6 +11,10 @@ export const GamesList = () => {
   const [genre, setGenre] = useState<string>("");
 
   const { games, addGame } = useContext(GameContext) as GameContextType;
+  const { toasts, showToast, removeToast } = useContext(
+    ToastContext
+  ) as ToastContextType;
+
   const filterControl = useFilterInput();
 
   const filteredGames = useMemo(
@@ -31,6 +37,12 @@ export const GamesList = () => {
     });
   };
 
+  const handle50Toasts = () => {
+    for (let i = 0; i < 50; i++) {
+      showToast("A success message", "success");      
+    }
+  };
+
   // throw new Error("Error has appeared!");
 
   return (
@@ -38,6 +50,40 @@ export const GamesList = () => {
       <div className="row justify-content-center">
         <div className="col-10 col-sm-8 col-md-6 col-lg-4 my-2 my-md-3">
           <FilterInput inputBar={filterControl} />
+        </div>
+        <div className="row row-col-4">
+          <div className="col">
+            <button
+              className="btn btn-success"
+              onClick={() => showToast("A success message", "success")}
+            >
+              Show Success Toast
+            </button>
+          </div>
+          <div className="col">
+            <button
+              className="btn btn-warning"
+              onClick={() => showToast("A warning message", "warning")}
+            >
+              Show Warning Toast
+            </button>
+          </div>
+          <div className="col">
+            <button
+              className="btn btn-danger"
+              onClick={() => showToast("A danger message", "danger")}
+            >
+              Show Danger Toast
+            </button>
+          </div>
+          <div className="col">
+            <button
+              className="btn btn-secondary text-white"
+              onClick={handle50Toasts}
+            >
+              Show 50 Toasts
+            </button>
+          </div>
         </div>
       </div>
       <div className="d-flex flex-wrap m-3">
@@ -100,6 +146,7 @@ export const GamesList = () => {
           </button>
         </form>
       </div>
+      <ToastList data={toasts} removeToast={removeToast} />
     </div>
   );
 };

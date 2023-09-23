@@ -22,7 +22,6 @@ const getGamesInLocalStorage = (): IGame[] => {
 };
 
 const GameContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [gameIndex, setGameIndex] = useState<number>(3);
   const [games, setGames] = useState<IGame[]>([]);
 
   useEffect(() => {
@@ -43,15 +42,15 @@ const GameContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, [games]);
 
   const addGame = (g: IGame) => {
-    const newGame: IGame = {
-      id: gameIndex.toString(),
-      title: g.title,
-      releaseYear: g.releaseYear,
-      genre: g.genre,
-    };
-    console.log(newGame);
-    setGameIndex((i) => i + 1);
-    setGames([...games, newGame]);
+    setGames((oldGames) => [
+      ...oldGames,
+      {
+        id: oldGames.length.toString(),
+        title: g.title,
+        releaseYear: g.releaseYear,
+        genre: g.genre,
+      },
+    ]);
   };
 
   const startingValue: GameContextType = {

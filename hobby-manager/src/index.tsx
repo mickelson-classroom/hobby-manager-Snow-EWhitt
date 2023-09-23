@@ -5,16 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap";
 import "./assests/custom.scss";
-import ErrorBoundary from "./pages/ErrorBoundary";
-import GameContextProvider from "./context/gameContext";
+import GameContextProvider from "./context/GameContext";
+import ToastContextProvider from "./context/ToastContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <GameContextProvider>  
-      <App />
+    <GameContextProvider>
+      <ToastContextProvider>
+        <App />
+      </ToastContextProvider>
     </GameContextProvider>
   </React.StrictMode>
 );
