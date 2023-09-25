@@ -18,7 +18,7 @@ export const FilterInput: FC<{ inputBar: FilterInputControl }> = ({
   inputBar,
 }) => {
   return (
-    <>
+    <div className="">
       <label
         id="filterInput"
         className="form-label">
@@ -26,10 +26,10 @@ export const FilterInput: FC<{ inputBar: FilterInputControl }> = ({
       </label>
       <input
         id="filterInput"
-        className="form-control"
+        className="form-control mb-2"
         value={inputBar.filterValue}
         onChange={(e) => inputBar.setFilterValue(e.target.value)}
       />
-    </>
+    </div>
   );
 };

@@ -4,11 +4,15 @@ import { IGame, listOfGames } from "../models/games";
 export interface GameContextType {
   games: IGame[];
   addGame: (g: IGame) => void;
+  updateGame: (g: IGame) => void;
+  removeGame: (gameId: string) => void;
 }
 
 export const GameContext = createContext<GameContextType>({
   games: [],
   addGame: () => {},
+  updateGame: () => {},
+  removeGame: () => {},
 });
 
 const storageKey = "storedGames";
@@ -23,6 +27,7 @@ const getGamesInLocalStorage = (): IGame[] => {
 
 const GameContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [games, setGames] = useState<IGame[]>([]);
+  const [index, setIndex] = useState<number>(3);
 
   useEffect(() => {
     const gamesFromStorage = getGamesInLocalStorage();
@@ -41,21 +46,37 @@ const GameContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     return () => clearTimeout(handler);
   }, [games]);
 
-  const addGame = (g: IGame) => {
+  const addGame = (newGame: IGame) => {
     setGames((oldGames) => [
       ...oldGames,
       {
-        id: oldGames.length.toString(),
-        title: g.title,
-        releaseYear: g.releaseYear,
-        genre: g.genre,
+        id: index.toString(),
+        title: newGame.title,
+        releaseYear: newGame.releaseYear,
+        genre: newGame.genre,
       },
+    ]);
+    setIndex((oldIndex) => oldIndex + 1);
+  };
+
+  const removeGame = (gameId: string) => {
+    setGames((oldGames) => 
+      oldGames.filter((g) => g.id !== gameId)
+    );
+  };
+
+  const updateGame = (game: IGame) => {
+    setGames((oldGames) => [
+      game,
+      ...oldGames.filter((g) => g.id !== game.id),
     ]);
   };
 
   const startingValue: GameContextType = {
     games,
     addGame,
+    updateGame,
+    removeGame,
   };
 
   return (

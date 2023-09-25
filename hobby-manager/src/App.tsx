@@ -1,12 +1,12 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/NavBar";
-import { GameItem } from "./pages/GameDetails";
+import { GameItem } from "./pages/GameDetails/GameDetails";
 import { GamesList } from "./pages/GamesList";
 import ErrorBoundary from "./pages/ErrorBoundary";
+import CreateGameItem from "./pages/CreateGameItem";
 
 export const App = () => {
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -14,7 +14,7 @@ export const App = () => {
         <ErrorBoundary>
           <GamesList />
         </ErrorBoundary>
-      )
+      ),
     },
     {
       path: "games/:gameId",
@@ -22,7 +22,15 @@ export const App = () => {
         <ErrorBoundary>
           <GameItem />
         </ErrorBoundary>
-      )
+      ),
+    },
+    {
+      path: "create-game",
+      element: (
+        <ErrorBoundary>
+          <CreateGameItem />
+        </ErrorBoundary>
+      ),
     },
   ]);
 

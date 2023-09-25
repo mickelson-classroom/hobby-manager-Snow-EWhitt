@@ -10,18 +10,18 @@ export const listOfGames: IGame[] = [
     id: '0',
     title: 'Minecraft',
     releaseYear: 2011,
-    genre: 'sandbox'
+    genre: 'Sandbox'
   },
   {
     id: '1',
     title: 'Dying Light',
     releaseYear: 2016,
-    genre: 'survival'
+    genre: 'Survival'
   },
   {
     id: '2',
     title: 'Prey',
     releaseYear: 2017,
-    genre: 'science-fiction'
+    genre: 'Science-fiction'
   }
 ]
