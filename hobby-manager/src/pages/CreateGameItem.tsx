@@ -1,24 +1,35 @@
 import { useContext, useState } from "react";
-import { GameContext, GameContextType } from "../context/GameContext";
+// import { GameContext, GameContextType } from "../context/GameContext";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../app/hooks";
+import { addGame } from "../features/game/game-slice";
 
 const CreateGameItem = () => {
   const [title, setTitle] = useState<string>("");
   const [release, setRelease] = useState<string>("");
   const [genre, setGenre] = useState<string>("");
 
-  const { addGame } = useContext(GameContext) as GameContextType;
+  // const { addGame } = useContext(GameContext) as GameContextType;
+  const dispatch = useAppDispatch();
 
   const handleGameSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (title.length > 0 && release.length > 0 && genre.length > 0) {
-      addGame({
-        id: "",
-        title: title,
-        releaseYear: parseInt(release),
-        genre: genre,
-      });
+      // addGame({
+      //   id: "",
+      //   title: title,
+      //   releaseYear: parseInt(release),
+      //   genre: genre,
+      // });
+      dispatch(
+        addGame({
+          id: "",
+          title,
+          releaseYear: parseInt(release),
+          genre,
+        })
+      );
     }
   };
 

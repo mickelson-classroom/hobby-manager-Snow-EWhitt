@@ -5,19 +5,28 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap";
 import "./assests/custom.scss";
-import GameContextProvider from "./context/GameContext";
-import ToastContextProvider from "./context/ToastContext";
+// import GameContextProvider from "./context/GameContext";
+// import ToastContextProvider from "./context/ToastContext";
+import { Provider } from "react-redux";
+import { store, persistor } from "./app/store";
+
+import { PersistGate } from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <GameContextProvider>
-      <ToastContextProvider>
+    {/* <GameContextProvider> */}
+    {/* <ToastContextProvider> */}
+
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <App />
-      </ToastContextProvider>
-    </GameContextProvider>
+      </PersistGate>
+    </Provider>
+    {/* </ToastContextProvider> */}
+    {/* </GameContextProvider> */}
   </React.StrictMode>
 );
 

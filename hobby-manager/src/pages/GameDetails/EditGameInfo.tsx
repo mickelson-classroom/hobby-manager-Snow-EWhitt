@@ -1,11 +1,14 @@
 import { FC, useContext, useState } from "react";
 import { IGame } from "../../models/games";
 import { CustomInput } from "../../components/CustomInput";
-import { GameContext, GameContextType } from "../../context/GameContext";
+// import { GameContext, GameContextType } from "../../context/GameContext";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
+import { removeGame, updateGame } from "../../features/game/game-slice";
 
 export const EditGameInfo: FC<{ game: IGame }> = ({ game }) => {
-  const { updateGame, removeGame } = useContext(GameContext) as GameContextType;
+  // const { updateGame, removeGame } = useContext(GameContext) as GameContextType;
+  const dispatch = useAppDispatch();
 
   const [updatedTitle, setUpdatedTitle] = useState<string>(game.title);
   const [updatedRelease, setUpdatedRelease] = useState(game.releaseYear);
@@ -18,10 +21,16 @@ export const EditGameInfo: FC<{ game: IGame }> = ({ game }) => {
         value={updatedTitle}
         onChange={(value) => {
           setUpdatedTitle(value);
-          updateGame({
-            ...game,
-            title: value,
-          });
+          // updateGame({
+          //   ...game,
+          //   title: value,
+          // });
+          dispatch(
+            updateGame({
+              ...game,
+              title: value,
+            })
+          );
         }}
       >
         Title:
@@ -31,10 +40,16 @@ export const EditGameInfo: FC<{ game: IGame }> = ({ game }) => {
         value={updatedRelease}
         onChange={(year) => {
           setUpdatedRelease(parseInt(year));
-          updateGame({
-            ...game,
-            releaseYear: parseInt(year),
-          });
+          // updateGame({
+          //   ...game,
+          //   releaseYear: parseInt(year),
+          // });
+          dispatch(
+            updateGame({
+              ...game,
+              releaseYear: parseInt(year),
+            })
+          );
         }}
       >
         Release Year:
@@ -44,17 +59,24 @@ export const EditGameInfo: FC<{ game: IGame }> = ({ game }) => {
         value={updatedGenre}
         onChange={(genre) => {
           setUpdatedGenre(genre);
-          updateGame({
-            ...game,
-            genre: genre,
-          });
+          // updateGame({
+          //   ...game,
+          //   genre: genre,
+          // });
+          dispatch(
+            updateGame({
+              ...game,
+              genre: genre,
+            })
+          );
         }}
       >
         Genre:
       </CustomInput>
       <button
         className="btn btn-danger mt-3"
-        onClick={() => removeGame(game.id)}
+        // onClick={() => removeGame(game.id)}
+        onClick={() => dispatch(removeGame(game.id))}
       >
         <Link className="text-decoration-none text-white" to="/">
           Delete

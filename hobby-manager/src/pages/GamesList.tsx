@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom";
-import { GameContext, GameContextType } from "../context/GameContext";
+// import { GameContext, GameContextType } from "../context/GameContext";
 import { useContext, useMemo, useState } from "react";
 import { FilterInput, useFilterInput } from "../components/FilterInput";
 import ToastList from "../components/ToastList/ToastList";
-import { ToastContext, ToastContextType } from "../context/ToastContext";
+// import { ToastContext, ToastContextType } from "../context/ToastContext";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { showToast, removeToast } from "../features/toast/toast-slice";
+import { store } from "../app/store";
 
 export const GamesList = () => {
-  const { games } = useContext(GameContext) as GameContextType;
-  const { toasts, showToast, removeToast } = useContext(
-    ToastContext
-  ) as ToastContextType;
+  // const { games } = useContext(GameContext) as GameContextType;
+  // const { toasts, showToast, removeToast } = useContext(
+  //   ToastContext
+  // ) as ToastContextType;
+
+  const toasts = useAppSelector((state) => state.toasts.values);
+  const games = useAppSelector((state) => state.games.values)
+  const dispatch = useAppDispatch();
 
   const filterControl = useFilterInput();
 
@@ -23,9 +30,32 @@ export const GamesList = () => {
     [games, filterControl.filterValue]
   );
 
+  const handleShowToast = (message: string, type: string) => {
+    dispatch(showToast({ message, type }));
+
+    const toasts = store.getState().toasts.values;
+    const lastToast = toasts[toasts.length - 1];
+
+    setTimeout(() => {
+      dispatch(removeToast(lastToast.id));
+    }, 5000);
+  };
+
+  const handleRemoveToast = (id: number) => {
+    dispatch(removeToast(id));
+  };
+
   const handle50Toasts = () => {
     for (let i = 0; i < 50; i++) {
-      showToast("A success message", "success");
+      // showToast("A success message", "success");
+      dispatch(showToast({ message: "A success message", type: "success" }));
+
+      const toasts = store.getState().toasts.values;
+      const lastToast = toasts[toasts.length - 1];
+
+      setTimeout(() => {
+        dispatch(removeToast(lastToast.id));
+      }, 5000);
     }
   };
 
@@ -41,7 +71,10 @@ export const GamesList = () => {
           <div className="col">
             <button
               className="btn btn-success"
-              onClick={() => showToast("A success message", "success")}
+              onClick={() =>
+                // showToast("A success message", "success")
+                handleShowToast("A success message", "success")
+              }
             >
               Show Success Toast
             </button>
@@ -49,7 +82,10 @@ export const GamesList = () => {
           <div className="col">
             <button
               className="btn btn-warning"
-              onClick={() => showToast("A warning message", "warning")}
+              onClick={() =>
+                // showToast("A warning message", "warning")
+                handleShowToast("A warning message", "warning")
+              }
             >
               Show Warning Toast
             </button>
@@ -57,7 +93,10 @@ export const GamesList = () => {
           <div className="col">
             <button
               className="btn btn-danger"
-              onClick={() => showToast("A danger message", "danger")}
+              onClick={() =>
+                // showToast("A danger message", "danger")
+                handleShowToast("A danger message", "danger")
+              }
             >
               Show Danger Toast
             </button>
@@ -91,7 +130,7 @@ export const GamesList = () => {
           </Link>
         ))}
       </div>
-      <ToastList data={toasts} removeToast={removeToast} />
+      <ToastList data={toasts} removeToast={handleRemoveToast} />
     </div>
   );
 };

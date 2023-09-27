@@ -1,12 +1,17 @@
 import { useParams } from "react-router-dom";
-import { GameContext, GameContextType } from "../../context/GameContext";
-import { useContext, useState } from "react";
+// import { GameContext, GameContextType } from "../../context/GameContext";
+import {
+  // useContext,
+  useState
+} from "react";
 import { EditGameInfo } from "./EditGameInfo";
+import { useAppSelector } from "../../app/hooks";
 
 export const GameItem = () => {
   const { gameId } = useParams();
 
-  const { games } = useContext(GameContext) as GameContextType;
+  // const { games } = useContext(GameContext) as GameContextType;
+  const games = useAppSelector((state) => state.games.values);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
