@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGame, listOfGames } from "../../models/games";
+import { IGame, listOfGames } from "../../models/games/games";
 
 interface gameListState {
   values: IGame[];
@@ -8,7 +8,7 @@ interface gameListState {
 
 const initialState: gameListState = {
   values: listOfGames,
-  index: 3,
+  index: 5,
 };
 
 const gameSlice = createSlice({
@@ -23,6 +23,7 @@ const gameSlice = createSlice({
         title: game.title,
         releaseYear: game.releaseYear,
         genre: game.genre,
+        image: game.image,
       });
 
       state.index++;

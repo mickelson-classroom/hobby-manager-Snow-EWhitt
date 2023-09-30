@@ -1,37 +1,38 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
-export const CustomInput: FC<{
-  id: string;
-  type?: string;
-  value: string | number;
-  required?: boolean;
-  onChange?: (i: string) => void;
-  children?: string | never[];
-}> = ({ id, type, value, onChange, children: labelName, required }) => {
-  const handleOnChange = (newValue: string) => {
-    if (onChange) {
-      onChange(newValue);
-    }
+export interface CustomInputControl<T> {
+  inputValue: T;
+  setInputValue: (newValue: T) => void;
+}
+
+export const useCustomInput = (
+  initialValue: any,
+): CustomInputControl<any> => {
+  const [inputValue, setInputValue] = useState<any>(initialValue);
+
+  return {
+    inputValue,
+    setInputValue,
   };
+};
 
+export const CustomInput: FC<{ controller: CustomInputControl<any>, label: string, type?: string }> = ({
+  controller,
+  label,
+  type,
+}) => {
   return (
     <div className="text-start">
-      <label htmlFor={id} className="form-label mt-2">
-        {labelName}
+      <label htmlFor={label} className="form-label mt-2">
+        {label}
       </label>
       <input
-        id={id}
-        type={type}
+        id={label}
         className="form-control mb-2"
-        value={value}
-        onChange={(e) => handleOnChange(e.target.value)}
-        required={required}
+        type={type}
+        value={controller.inputValue}
+        onChange={(e) => controller.setInputValue(e.target.value)}
       />
-      {value && required ? (
-        <div className="valid-feedback">Looks good!</div>
-      ) : (
-        <div className="invalid-feedback">Required</div>
-      )}
     </div>
   );
 };

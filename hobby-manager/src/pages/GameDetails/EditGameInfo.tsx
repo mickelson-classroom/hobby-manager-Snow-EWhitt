@@ -1,78 +1,77 @@
-import { FC, useContext, useState } from "react";
-import { IGame } from "../../models/games";
-import { CustomInput } from "../../components/CustomInput";
+import {
+  FC,
+  useEffect,
+  // useContext,
+} from "react";
+import { IGame } from "../../models/games/games";
+import { CustomInput, useCustomInput } from "../../components/CustomInput";
 // import { GameContext, GameContextType } from "../../context/GameContext";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { removeGame, updateGame } from "../../features/game/game-slice";
+import { CustomSelect, useCustomSelect } from "../../components/CustomSelect";
+import ImageUploader, { useImageInput } from "../../components/ImageUploader";
 
 export const EditGameInfo: FC<{ game: IGame }> = ({ game }) => {
   // const { updateGame, removeGame } = useContext(GameContext) as GameContextType;
   const dispatch = useAppDispatch();
 
-  const [updatedTitle, setUpdatedTitle] = useState<string>(game.title);
-  const [updatedRelease, setUpdatedRelease] = useState(game.releaseYear);
-  const [updatedGenre, setUpdatedGenre] = useState(game.genre);
+  const titleControl = useCustomInput(game.title);
+  const releaseControl = useCustomInput(game.releaseYear);
+  const genreControl = useCustomInput(game.genre);
+  const selectControl = useCustomSelect();
+  const imageControl = useImageInput(game.image);
+
+  useEffect(() => {
+    dispatch(
+      updateGame({
+        ...game,
+        title: titleControl.inputValue,
+      })
+    );
+  }, [titleControl.inputValue]);
+
+  useEffect(() => {
+    dispatch(
+      updateGame({
+        ...game,
+        releaseYear: parseInt(releaseControl.inputValue),
+      })
+    );
+  }, [releaseControl.inputValue]);
+
+  useEffect(() => {
+    dispatch(
+      updateGame({
+        ...game,
+        genre: genreControl.inputValue,
+      })
+    );
+  }, [genreControl.inputValue]);
+
+  useEffect(() => {
+    dispatch(
+      updateGame({
+        ...game,
+        image: imageControl.imageValue,
+      })
+    );
+  }, [imageControl.imageValue]);
 
   return (
     <div className="mx-sm-5">
-      <CustomInput
-        id="updateTitle"
-        value={updatedTitle}
-        onChange={(value) => {
-          setUpdatedTitle(value);
-          // updateGame({
-          //   ...game,
-          //   title: value,
-          // });
-          dispatch(
-            updateGame({
-              ...game,
-              title: value,
-            })
-          );
-        }}
+      <CustomInput controller={titleControl} label="Title" />
+      <CustomInput controller={releaseControl} label="Release Year" />
+      <CustomInput controller={genreControl} label="Genre" />
+      <CustomSelect
+        controller={selectControl}
+        label="Favorite?"
+        defaultValue="no"
       >
-        Title:
-      </CustomInput>
-      <CustomInput
-        id="updateReleaseYear"
-        value={updatedRelease}
-        onChange={(year) => {
-          setUpdatedRelease(parseInt(year));
-          // updateGame({
-          //   ...game,
-          //   releaseYear: parseInt(year),
-          // });
-          dispatch(
-            updateGame({
-              ...game,
-              releaseYear: parseInt(year),
-            })
-          );
-        }}
-      >
-        Release Year:
-      </CustomInput>
-      <CustomInput
-        id="updateGenre"
-        value={updatedGenre}
-        onChange={(genre) => {
-          setUpdatedGenre(genre);
-          // updateGame({
-          //   ...game,
-          //   genre: genre,
-          // });
-          dispatch(
-            updateGame({
-              ...game,
-              genre: genre,
-            })
-          );
-        }}
-      >
-        Genre:
-      </CustomInput>
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </CustomSelect>
+      <ImageUploader controller={imageControl} />
       <button
         className="btn btn-danger mt-3"
         // onClick={() => removeGame(game.id)}

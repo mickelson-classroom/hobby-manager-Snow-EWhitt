@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 // import { GameContext, GameContextType } from "../context/GameContext";
-import { useContext, useMemo, useState } from "react";
+import {
+  // useContext,
+  useMemo,
+  // useState 
+} from "react";
 import { FilterInput, useFilterInput } from "../components/FilterInput";
 import ToastList from "../components/ToastList/ToastList";
 // import { ToastContext, ToastContextType } from "../context/ToastContext";
@@ -119,6 +123,7 @@ export const GamesList = () => {
             to={`/games/${g.id}`}
           >
             <div className="card m-2 border-primary border-3 shadow">
+              <img className="card-img-top border border-primary" src={g.image} alt="..." />
               <div className="card-body">
                 <h5 className="card-title text-secondary">{g.title}</h5>
                 <p className="card-text">

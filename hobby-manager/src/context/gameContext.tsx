@@ -1,5 +1,5 @@
 import { useState, FC, ReactNode, createContext, useEffect } from "react";
-import { IGame, listOfGames } from "../models/games";
+import { IGame, listOfGames } from "../models/games/games";
 
 export interface GameContextType {
   games: IGame[];
@@ -54,6 +54,7 @@ const GameContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
         title: newGame.title,
         releaseYear: newGame.releaseYear,
         genre: newGame.genre,
+        image: newGame.image,
       },
     ]);
     setIndex((oldIndex) => oldIndex + 1);
