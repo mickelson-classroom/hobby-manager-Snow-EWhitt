@@ -36,10 +36,16 @@ export const App = () => {
 
   return (
     <div className="App">
-      <NavBar />
-      <ErrorBoundary>
-        <RouterProvider router={router} />
-      </ErrorBoundary>
+      <div className="d-flex flex-column-reverse flex-sm-column" style={{ height: '100vh' }}>
+        <div>
+          <NavBar />
+        </div>
+        <div style={{ flex: 1, overflowY: 'auto'}}>
+          <ErrorBoundary>
+            <RouterProvider router={router} />
+          </ErrorBoundary>
+        </div>
+      </div>
     </div>
   );
 };
