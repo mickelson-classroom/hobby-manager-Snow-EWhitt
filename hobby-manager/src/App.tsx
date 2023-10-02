@@ -5,6 +5,7 @@ import { GameItem } from "./pages/GameDetails/GameDetails";
 import { GamesList } from "./pages/GamesList";
 import ErrorBoundary from "./pages/ErrorBoundary";
 import CreateGameItem from "./pages/CreateGameItem";
+import { Demonstration } from "./pages/Demonstration";
 
 export const App = () => {
   const router = createBrowserRouter([
@@ -29,6 +30,14 @@ export const App = () => {
       element: (
         <ErrorBoundary>
           <CreateGameItem />
+        </ErrorBoundary>
+      ),
+    },
+    {
+      path: "demonstration",
+      element: (
+        <ErrorBoundary>
+          <Demonstration />
         </ErrorBoundary>
       ),
     },
