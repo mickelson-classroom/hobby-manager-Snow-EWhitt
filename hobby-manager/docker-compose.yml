@@ -10,6 +10,8 @@ services:
     container_name: hobby-swagger
     cap_add:
       - NET_ADMIN
+    env_file:
+    - .env
     environment:
       - PUID=1000
       - PGID=1000
@@ -20,5 +22,5 @@ services:
     volumes:
       - /home/ethan/data/swag:/config
     ports:
-      - 0.0.0.0:3007:80
+    - 0.0.0.0:3007:80
     restart: unless-stopped
