@@ -18,7 +18,7 @@ services:
       - TZ=America/Denver
       - URL=whittakerxyz.duckdns.org
       - VALIDATION=duckdns
-      - STAGING=true
+      - STAGING=false
     volumes:
       - /home/ethan/data/swag:/config
     ports:
