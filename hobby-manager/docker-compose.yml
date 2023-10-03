@@ -5,9 +5,9 @@ services:
     # ports:
     # - 0.0.0.0:3007:80
 
-  swag:
+  hobby-swagger:
     image: lscr.io/linuxserver/swag
-    container_name: swag
+    container_name: hobby-swagger
     cap_add:
       - NET_ADMIN
     environment:
