@@ -1,0 +1,9 @@
+.dockerignore
+node_modules/
+data.json/
+.gitignore
+*.http
+Dockerfile
+*.js
+docker-compose.yml
+storage/

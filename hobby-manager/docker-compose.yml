@@ -3,6 +3,12 @@ services:
   client:
     build: .
 
+  api:
+    build: ../storage-api
+    container_name: ethan-storage-api
+    volumes:
+      - /home/ethan/data/apiStorage:/app/storage
+
   hobby-swagger:
     image: lscr.io/linuxserver/swag
     container_name: hobby-swagger
