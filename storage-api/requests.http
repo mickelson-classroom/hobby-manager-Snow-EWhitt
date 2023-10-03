@@ -2,20 +2,28 @@ POST http://localhost:3000/api/store?key=restclient
 Content-Type: application/json
 
 {
-  "testdata": "this is test data"
+  "testdata": "this is test data",
+  "othertestdata": "other"
 }
+
+###
+POST http://localhost:3000/api/store?key=restclient
+Content-Type: application/json
+
+[
+  "totally",
+  "separate",
+  "data"
+]
 
 ###
 
 GET http://localhost:3000/api/store?key=restclient
 
 ###
-
 DELETE http://localhost:3000/api/store?key=restclient
 
-
-
-### Hit Production
+### hit production
 
 POST https://whittakerxyz.duckdns.org:3007/api/store?key=prodkey
 Content-Type: application/json
