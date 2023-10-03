@@ -2,22 +2,19 @@ version: "3"
 services:
   client:
     build: .
-    # ports:
-    # - 0.0.0.0:3007:80
 
   hobby-swagger:
     image: lscr.io/linuxserver/swag
     container_name: hobby-swagger
     cap_add:
       - NET_ADMIN
-    env_file:
-    - .env
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Denver
       - URL=whittakerxyz.duckdns.org
       - VALIDATION=duckdns
+      - DUCKDNSTOKEN=${DUCKDNSTOKEN}
       - STAGING=false
     volumes:
       - /home/ethan/data/swag:/config
