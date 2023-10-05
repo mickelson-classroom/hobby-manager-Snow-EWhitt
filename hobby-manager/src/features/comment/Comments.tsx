@@ -27,7 +27,8 @@ export const Comments: FC<{ game: IGame }> = ({ game }) => {
   };
 
   useEffect(() => {
-    CommentService.getAllComments().then((c) => setComments(c));
+    // CommentService.getAllComments().then((c) => setComments(c));
+    CommentService.getComment(game.id).then((c) => setComments(c));
   }, [comments]);
 
   return (

@@ -23,6 +23,13 @@ export const CommentService = {
     }
   },
 
+  async getComment(gameId: string) {
+    const comments = await this.getAllComments();
+    const filteredComments = comments.filter(comment => comment.gameId == gameId);
+    
+    return filteredComments;
+  },
+
   async addComment(comment: IComment) {
     const comments = await this.getAllComments();
     const newComments = [...comments, comment];
