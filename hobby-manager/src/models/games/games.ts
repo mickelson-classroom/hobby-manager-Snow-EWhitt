@@ -1,9 +1,12 @@
+import { IComment } from './comment';
+
 export interface IGame {
   id: string;
   title: string;
   releaseYear: number;
   genre: string;
   image: string;
+  comments?: IComment[]
 }
 
 export const listOfGames: IGame[] = [

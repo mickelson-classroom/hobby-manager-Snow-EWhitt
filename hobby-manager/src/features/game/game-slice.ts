@@ -24,6 +24,7 @@ const gameSlice = createSlice({
         releaseYear: game.releaseYear,
         genre: game.genre,
         image: game.image,
+        comments: game.comments,
       });
 
       state.index++;

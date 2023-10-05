@@ -2,10 +2,11 @@ import { useParams } from "react-router-dom";
 // import { GameContext, GameContextType } from "../../context/GameContext";
 import {
   // useContext,
-  useState
+  useState,
 } from "react";
 import { EditGameInfo } from "./EditGameInfo";
 import { useAppSelector } from "../../app/hooks";
+import { Comments } from "../../features/comment/Comments";
 
 export const GameItem = () => {
   const { gameId } = useParams();
@@ -43,7 +44,8 @@ export const GameItem = () => {
           </p>
         </div>
       </div>
-      { selectedGame && isEditing && <EditGameInfo game={selectedGame} /> }
+      {selectedGame && isEditing && <EditGameInfo game={selectedGame} />}
+      {selectedGame && <Comments game={selectedGame} />}
     </div>
   );
 };
