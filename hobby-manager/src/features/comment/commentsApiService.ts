@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IComment } from "../models/games/comment";
+import { IComment } from "../../models/games/comment";
 
 const url = "/api/store?key=";
 

@@ -10,7 +10,7 @@ import ToastList from "../components/ToastList/ToastList";
 // import { ToastContext, ToastContextType } from "../context/ToastContext";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { showToast, removeToast } from "../features/toast/toast-slice";
-import { store } from "../app/store";
+import store from "../app/store";
 
 export const GamesList = () => {
   // const { games } = useContext(GameContext) as GameContextType;
@@ -18,9 +18,9 @@ export const GamesList = () => {
   //   ToastContext
   // ) as ToastContextType;
 
-  const toasts = useAppSelector((state) => state.toasts.values);
-  const games = useAppSelector((state) => state.games.values);
   const dispatch = useAppDispatch();
+  const games = useAppSelector((state) => state.games.items);
+  const toasts = useAppSelector((state) => state.toasts.values);
 
   const filterControl = useFilterInput();
 

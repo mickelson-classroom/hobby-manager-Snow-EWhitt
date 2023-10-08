@@ -3,7 +3,7 @@ import { CustomInput, useCustomInput } from "../../components/CustomInput";
 import { Spinner } from "../../components/Spinner/Spinner";
 import { IComment } from "../../models/games/comment";
 import { IGame } from "../../models/games/games";
-import { CommentService } from "../../services/commentsApiService";
+import { CommentService } from "./commentsApiService";
 import { FC, FormEvent, useEffect, useState } from "react";
 
 export const Comments: FC<{ game: IGame }> = ({ game }) => {

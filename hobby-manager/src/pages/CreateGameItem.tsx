@@ -1,14 +1,18 @@
 // import { useContext, useState } from "react";
 // import { GameContext, GameContextType } from "../context/GameContext";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../app/hooks";
-import { addGame } from "../features/game/game-slice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+// import { addGame } from "../features/game/game-slice";
 import { CustomInput, useCustomInput } from "../components/CustomInput";
 import ImageUploader, { useImageInput } from "../components/ImageUploader";
+import { updateAndGetGames } from "../features/game/game-slice";
+import { Spinner } from "../components/Spinner/Spinner";
 
 const CreateGameItem = () => {
   // const { addGame } = useContext(GameContext) as GameContextType;
   const dispatch = useAppDispatch();
+  const items = useAppSelector((store) => store.games.items);
+  const loading = useAppSelector((store) => store.games.loading);
 
   const titleControl = useCustomInput("");
   const releaseControl = useCustomInput("");
@@ -31,33 +35,41 @@ const CreateGameItem = () => {
       //   releaseYear: parseInt(release),
       //   genre: genre,
       // });
-      dispatch(
-        addGame({
-          id: "",
+      const newItemList = [
+        ...items,
+        {
+          id: Date().valueOf.toString(),
           title,
           releaseYear: release,
           genre,
           image,
-        })
-      );
+        },
+      ];
+
+      dispatch(updateAndGetGames(newItemList));
     }
   };
 
   return (
     <div className="container-sm text-start">
       <form className="form">
-        <div className="my-2">
-          <CustomInput controller={titleControl} label="Title" />
-        </div>
-        <div className="my-2">
-          <CustomInput controller={releaseControl} label="Release Year" />
-        </div>
-        <div className="mt-2 mb-4">
-          <CustomInput controller={genreControl} label="Genre" />
-        </div>
-        <div>
-          <ImageUploader controller={imageControl} />
-        </div>
+        {!loading && (
+          <>
+            <div className="my-2">
+              <CustomInput controller={titleControl} label="Title" />
+            </div>
+            <div className="my-2">
+              <CustomInput controller={releaseControl} label="Release Year" />
+            </div>
+            <div className="mt-2 mb-4">
+              <CustomInput controller={genreControl} label="Genre" />
+            </div>
+            <div>
+              <ImageUploader controller={imageControl} />
+            </div>
+          </>
+        )}
+        {loading && <Spinner />}
         <button
           type="submit"
           className="btn btn-primary"
@@ -70,6 +82,7 @@ const CreateGameItem = () => {
               imageControl.imageValue
             )
           }
+          disabled={loading}
         >
           <Link className="text-decoration-none text-black" to="/">
             Submit

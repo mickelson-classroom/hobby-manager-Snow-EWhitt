@@ -12,7 +12,8 @@ export const GameItem = () => {
   const { gameId } = useParams();
 
   // const { games } = useContext(GameContext) as GameContextType;
-  const games = useAppSelector((state) => state.games.values);
+  const games = useAppSelector((state) => state.games.items);
+  const loading = useAppSelector((state) => state.games.loading);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -26,23 +27,28 @@ export const GameItem = () => {
           <button
             className="btn btn-secondary"
             onClick={() => setIsEditing((oldBool) => !oldBool)}
+            disabled={loading}
           >
             {!isEditing ? "Edit" : "Close"}
           </button>
         </div>
       </div>
       <div className="mx-auto text-center">
-        <h2 className="text-secondary">{selectedGame?.title}</h2>
-        <div className="row row-cols-2 justify-content-center">
-          <p className="col col-sm-6 text-end">
-            <strong>Release Year: </strong>
-            {selectedGame?.releaseYear}
-          </p>
-          <p className="col col-sm-6 text-start text-wrap">
-            <strong>Genre: </strong>
-            {selectedGame?.genre}
-          </p>
-        </div>
+        {!loading && (
+          <>
+            <h2 className="text-secondary">{selectedGame?.title}</h2>
+            <div className="row row-cols-2 justify-content-center">
+              <p className="col col-sm-6 text-end">
+                <strong>Release Year: </strong>
+                {selectedGame?.releaseYear}
+              </p>
+              <p className="col col-sm-6 text-start text-wrap">
+                <strong>Genre: </strong>
+                {selectedGame?.genre}
+              </p>
+            </div>
+          </>
+        )}
       </div>
       {selectedGame && isEditing && <EditGameInfo game={selectedGame} />}
       {selectedGame && <Comments game={selectedGame} />}
