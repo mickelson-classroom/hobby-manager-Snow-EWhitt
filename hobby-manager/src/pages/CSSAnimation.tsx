@@ -1,6 +1,6 @@
 import "../assests/custom.scss";
 
-export const Demonstration = () => {
+export const CSSAnimation = () => {
   return (
     <>
       <div className="parent">

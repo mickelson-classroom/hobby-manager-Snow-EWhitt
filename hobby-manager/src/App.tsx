@@ -5,7 +5,8 @@ import { GameItem } from "./pages/GameDetails/GameDetails";
 import { GamesList } from "./pages/GamesList";
 import ErrorBoundary from "./pages/ErrorBoundary";
 import CreateGameItem from "./pages/CreateGameItem";
-import { Demonstration } from "./pages/Demonstration";
+import { CSSAnimation } from "./pages/CSSAnimation";
+import ReactQueryDemonstration from "./pages/ReactQueryDemonstration";
 
 export const App = () => {
   const router = createBrowserRouter([
@@ -18,7 +19,7 @@ export const App = () => {
       ),
     },
     {
-      path: "games/:gameId",
+      path: "/games/:gameId",
       element: (
         <ErrorBoundary>
           <GameItem />
@@ -26,7 +27,7 @@ export const App = () => {
       ),
     },
     {
-      path: "create-game",
+      path: "/create-game",
       element: (
         <ErrorBoundary>
           <CreateGameItem />
@@ -34,10 +35,10 @@ export const App = () => {
       ),
     },
     {
-      path: "demonstration",
+      path: "/demonstration",
       element: (
         <ErrorBoundary>
-          <Demonstration />
+          <ReactQueryDemonstration />
         </ErrorBoundary>
       ),
     },
