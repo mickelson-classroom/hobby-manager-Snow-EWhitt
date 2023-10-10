@@ -5,14 +5,19 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 // import { addGame } from "../features/game/game-slice";
 import { CustomInput, useCustomInput } from "../components/CustomInput";
 import ImageUploader, { useImageInput } from "../components/ImageUploader";
-import { updateAndGetGames } from "../features/game/game-slice";
+import { getGames, addGameAndGetList } from "../features/game/game-slice";
 import { Spinner } from "../components/Spinner/Spinner";
+import { useEffect } from "react";
 
 const CreateGameItem = () => {
   // const { addGame } = useContext(GameContext) as GameContextType;
   const dispatch = useAppDispatch();
   const items = useAppSelector((store) => store.games.items);
   const loading = useAppSelector((store) => store.games.loading);
+
+  useEffect(() => {
+    dispatch(getGames());
+  }, [])
 
   const titleControl = useCustomInput("");
   const releaseControl = useCustomInput("");
@@ -46,7 +51,7 @@ const CreateGameItem = () => {
         },
       ];
 
-      dispatch(updateAndGetGames(newItemList));
+      dispatch(addGameAndGetList(newItemList));
     }
   };
 
@@ -84,9 +89,9 @@ const CreateGameItem = () => {
           }
           disabled={loading}
         >
-          <Link className="text-decoration-none text-black" to="/">
+          {/* <Link className="text-decoration-none text-black" to="/"> */}
             Submit
-          </Link>
+          {/* </Link> */}
         </button>
       </form>
     </div>

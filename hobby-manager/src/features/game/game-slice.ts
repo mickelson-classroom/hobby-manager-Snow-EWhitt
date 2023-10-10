@@ -14,20 +14,32 @@ const initialState: gameListState = {
   loading: false,
 };
 
-export const getGames = createAsyncThunk(
-  'games/get',
-  async () => {
-    const games = await GameService.getAllGames();
-    return games;
-  }
-);
+export const getGames = createAsyncThunk("games/get", async () => {
+  const games = await GameService.getAllGames();
+  return games;
+});
 
-export const updateAndGetGames = createAsyncThunk(
+export const addGameAndGetList = createAsyncThunk(
   "games/updateAndGet",
   async (games: IGame[]) => {
     await GameService.storeGames(games);
     const gamesFromApi = await GameService.getAllGames();
     return gamesFromApi;
+  }
+);
+
+export const updateGame = createAsyncThunk(
+  "games/updateGame",
+  async (game: IGame) => {
+    const items = await GameService.getAllGames();
+    const filteredItems = items.filter((item) => item.id != game.id);
+    const newItemList = [
+      ...filteredItems,
+      game
+    ];
+
+    await GameService.storeGames(newItemList);
+    return await GameService.getAllGames();
   }
 );
 
@@ -59,14 +71,14 @@ const gameSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(updateAndGetGames.pending, (state) => {
+      .addCase(addGameAndGetList.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateAndGetGames.fulfilled, (state, action) => {
+      .addCase(addGameAndGetList.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
       })
-      .addCase(updateAndGetGames.rejected, (state) => {
+      .addCase(addGameAndGetList.rejected, (state) => {
         state.loading = false;
       })
       .addCase(getGames.pending, (state) => {
@@ -79,6 +91,15 @@ const gameSlice = createSlice({
       .addCase(getGames.rejected, (state) => {
         state.loading = false;
       })
+      .addCase(updateGame.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateGame.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateGame.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
 

@@ -1,4 +1,3 @@
-import { setMaxListeners } from "events";
 import { CustomInput, useCustomInput } from "../../components/CustomInput";
 import { Spinner } from "../../components/Spinner/Spinner";
 import { IComment } from "../../models/games/comment";
@@ -29,7 +28,7 @@ export const Comments: FC<{ game: IGame }> = ({ game }) => {
   useEffect(() => {
     // CommentService.getAllComments().then((c) => setComments(c));
     CommentService.getComment(game.id).then((c) => setComments(c));
-  }, [comments]);
+  }, []);
 
   return (
     <div className="text-start">
@@ -55,9 +54,9 @@ export const Comments: FC<{ game: IGame }> = ({ game }) => {
                           className="btn btn-danger"
                           onClick={() => {
                             setIsLoading(true);
-                            CommentService.deleteComment(c.id).then(() =>
-                              setIsLoading(false)
-                            );
+                            CommentService.deleteComment(c.id);
+                            CommentService.getComment(game.id);
+                            setIsLoading(false);
                           }}
                         >
                           Remove
@@ -72,7 +71,7 @@ export const Comments: FC<{ game: IGame }> = ({ game }) => {
           {isLoading && <Spinner />}
         </div>
         <div className="col col-12 col-sm-6">
-          <form className="form" onSubmit={(e) => handleForm(e)}>
+          <form className="form" onSubmit={(e) => {handleForm(e); CommentService.getComment(game.id);}}>
             <CustomInput controller={commentControl} label={"Comment"} />
             <button type="submit" className="btn btn-success">
               Submit

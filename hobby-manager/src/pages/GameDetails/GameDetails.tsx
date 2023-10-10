@@ -12,12 +12,12 @@ export const GameItem = () => {
   const { gameId } = useParams();
 
   // const { games } = useContext(GameContext) as GameContextType;
-  const games = useAppSelector((state) => state.games.items);
+  const items = useAppSelector((state) => state.games.items);
   const loading = useAppSelector((state) => state.games.loading);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const selectedGame = games.find((g) => g.id === gameId);
+  const selectedGame = items.find((item) => item.id === gameId);
 
   return (
     <div className="container-lg">

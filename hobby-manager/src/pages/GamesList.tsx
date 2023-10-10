@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 // import { GameContext, GameContextType } from "../context/GameContext";
 import {
+  useEffect,
   // useContext,
   useMemo,
   // useState
@@ -11,16 +12,21 @@ import ToastList from "../components/ToastList/ToastList";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { showToast, removeToast } from "../features/toast/toast-slice";
 import store from "../app/store";
+import { getGames } from "../features/game/game-slice";
 
 export const GamesList = () => {
   // const { games } = useContext(GameContext) as GameContextType;
   // const { toasts, showToast, removeToast } = useContext(
   //   ToastContext
   // ) as ToastContextType;
-
+  
   const dispatch = useAppDispatch();
   const games = useAppSelector((state) => state.games.items);
   const toasts = useAppSelector((state) => state.toasts.values);
+  
+    useEffect(() => {
+      dispatch(getGames());
+    }, [])
 
   const filterControl = useFilterInput();
 

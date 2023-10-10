@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 // import { removeGame, updateGame } from "../../features/game/game-slice";
 import { CustomSelect, useCustomSelect } from "../../components/CustomSelect";
 import ImageUploader, { useImageInput } from "../../components/ImageUploader";
-import { updateAndGetGames } from "../../features/game/game-slice";
+import { addGameAndGetList, updateGame } from "../../features/game/game-slice";
 import { Link } from "react-router-dom";
 import { Spinner } from "../../components/Spinner/Spinner";
 
@@ -75,18 +75,15 @@ export const EditGameInfo: FC<{ game: IGame }> = ({ game }) => {
   // }, [imageControl.imageValue]);
 
   const handleSubmit = () => {
-    const newItemList = [
-      ...items,
-      {
-        ...game,
-        title: titleControl.inputValue,
-        releaseYear: releaseControl.inputValue,
-        genre: genreControl.inputValue,
-        image: imageControl.imageValue,
-      },
-    ];
+    const updatedGame = {
+      ...game,
+      title: titleControl.inputValue,
+      releaseYear: releaseControl.inputValue,
+      genre: genreControl.inputValue,
+      image: imageControl.imageValue,
+    };
 
-    dispatch(updateAndGetGames(newItemList));
+    dispatch(updateGame(updatedGame));
   };
 
   return (
@@ -113,9 +110,9 @@ export const EditGameInfo: FC<{ game: IGame }> = ({ game }) => {
           className="btn btn-danger"
           // onClick={() => removeGame(game.id)}
           onClick={() => {
-            const newItemList = items.filter((item) => item.id != game.id);
+            const newItemList = items.filter((item) => item.id !== game.id);
 
-            dispatch(updateAndGetGames(newItemList));
+            dispatch(addGameAndGetList(newItemList));
           }}
           disabled={loading}
         >
