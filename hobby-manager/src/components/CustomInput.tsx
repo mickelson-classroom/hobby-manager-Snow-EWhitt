@@ -5,9 +5,7 @@ export interface CustomInputControl<T> {
   setInputValue: (newValue: T) => void;
 }
 
-export const useCustomInput = (
-  initialValue: any,
-): CustomInputControl<any> => {
+export const useCustomInput = (initialValue: any): CustomInputControl<any> => {
   const [inputValue, setInputValue] = useState<any>(initialValue);
 
   return {
@@ -16,16 +14,18 @@ export const useCustomInput = (
   };
 };
 
-export const CustomInput: FC<{ controller: CustomInputControl<any>, label: string, type?: string }> = ({
-  controller,
-  label,
-  type,
-}) => {
+export const CustomInput: FC<{
+  controller: CustomInputControl<any>;
+  label?: string;
+  type?: string;
+}> = ({ controller, label, type }) => {
   return (
     <div className="text-start">
-      <label htmlFor={label} className="form-label mt-2">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={label} className="form-label mt-2">
+          {label}
+        </label>
+      )}
       <input
         id={label}
         className="form-control mb-2"

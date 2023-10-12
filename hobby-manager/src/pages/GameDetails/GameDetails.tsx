@@ -6,7 +6,7 @@ import {
 } from "react";
 import { EditGameInfo } from "./EditGameInfo";
 import { useAppSelector } from "../../app/hooks";
-import { Comments } from "../../features/comment/Comments";
+import { Comments } from "../../features/comment/CommentList";
 
 export const GameItem = () => {
   const { gameId } = useParams();
@@ -25,7 +25,7 @@ export const GameItem = () => {
         <h1 className="col offset-2 me-auto text-primary">Game Detail Page</h1>
         <div className="col-2 my-2">
           <button
-            className="btn btn-secondary"
+            className="btn btn-info"
             onClick={() => setIsEditing((oldBool) => !oldBool)}
             disabled={loading}
           >
@@ -51,7 +51,7 @@ export const GameItem = () => {
         )}
       </div>
       {selectedGame && isEditing && <EditGameInfo game={selectedGame} />}
-      {selectedGame && <Comments game={selectedGame} />}
+      {selectedGame && <Comments gameId={selectedGame.id} />}
     </div>
   );
 };

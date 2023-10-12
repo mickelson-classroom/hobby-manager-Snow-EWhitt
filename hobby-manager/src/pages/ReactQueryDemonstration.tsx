@@ -1,11 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import GameService from "../features/game/gameService";
-import { useAppSelector } from "../app/hooks";
 
 const GamesQuery = () => {
   const queryClient = useQueryClient();
-
-  const items = useAppSelector((store) => store.games.items);
 
   const query = useQuery({
     queryKey: ["games"],
@@ -30,7 +27,7 @@ const GamesQuery = () => {
       <button
         onClick={() => {
           mutation.mutate([
-            ...items,
+            ...query.data ?? [],
             {
               id: "100",
               title: "Test Game",
@@ -45,7 +42,8 @@ const GamesQuery = () => {
       </button>
       <button
         onClick={() => {
-          mutation.mutate(items.filter((game) => game.id !== "100"));
+          if (query.data)
+            mutation.mutate(query.data.filter((game) => game.id !== "100"));
         }}
       >
         Remove Game
