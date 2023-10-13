@@ -3,14 +3,14 @@ import { IComment } from "../../models/games/comment";
 import {
   useDeleteCommentMutation,
   useUpdateCommentMutation,
-} from "../../app/hooks";
+} from "./commentHooks";
 import { CustomInput, useCustomInput } from "../../components/CustomInput";
 
 const Comment: FC<{ comment: IComment }> = ({ comment }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const updateCommentMutation = useUpdateCommentMutation(comment.gameId);
-  const deleteCommentMutation = useDeleteCommentMutation(comment.gameId);
+  const deleteCommentMutation = useDeleteCommentMutation();
   const editCommentControl = useCustomInput(comment.body);
 
   const handleOnClick = () => {
@@ -29,13 +29,11 @@ const Comment: FC<{ comment: IComment }> = ({ comment }) => {
   return (
     <div className="row g-0 mb-3 align-items-center">
       <div className="col card p-3">
-        <div className="">
-          {isEditing ? (
-            <CustomInput controller={editCommentControl} />
-          ) : (
-            <p>{editCommentControl.inputValue}</p>
-          )}
-        </div>
+        {isEditing ? (
+          <CustomInput controller={editCommentControl} />
+        ) : (
+          <p>{editCommentControl.inputValue}</p>
+        )}
       </div>
       <div className="col-auto text-center">
         <button

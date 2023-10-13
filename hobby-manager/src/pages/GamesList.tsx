@@ -19,14 +19,14 @@ export const GamesList = () => {
   // const { toasts, showToast, removeToast } = useContext(
   //   ToastContext
   // ) as ToastContextType;
-  
+
   const dispatch = useAppDispatch();
   const games = useAppSelector((state) => state.games.items);
   const toasts = useAppSelector((state) => state.toasts.values);
-  
-    useEffect(() => {
-      dispatch(getGames());
-    }, [])
+
+  useEffect(() => {
+    dispatch(getGames());
+  }, []);
 
   const filterControl = useFilterInput();
 

@@ -4,11 +4,11 @@ import { IComment } from "../../models/games/comment";
 import { FC, FormEvent } from "react";
 import ErrorPage from "../../pages/ErrorPage";
 import Comment from "./Comment";
-import { useAddCommentMutation, useCommentsQuery } from "../../app/hooks";
+import { useAddCommentMutation, useCommentsQuery } from "./commentHooks";
 
 export const Comments: FC<{ gameId: string }> = ({ gameId }) => {
   const comments = useCommentsQuery(gameId);
-  const addCommentMutation = useAddCommentMutation(gameId);
+  const addCommentMutation = useAddCommentMutation();
   const addCommentControl = useCustomInput("");
 
   const handleForm = (event: FormEvent<HTMLFormElement>) => {
@@ -36,9 +36,9 @@ export const Comments: FC<{ gameId: string }> = ({ gameId }) => {
         >
           {comments.data?.map(
             (currentComment) =>
-              !comments.isFetching && <Comment comment={currentComment} />
+              !comments.isLoading && <Comment comment={currentComment} />
           )}
-          {comments.isFetching && <Spinner />}
+          {comments.isLoading && <Spinner />}
         </div>
         <div className="col col-12 col-sm-6">
           <form className="form" onSubmit={(e) => handleForm(e)}>
@@ -46,7 +46,7 @@ export const Comments: FC<{ gameId: string }> = ({ gameId }) => {
             <button
               type="submit"
               className="btn btn-success"
-              disabled={comments.isFetching}
+              disabled={comments.isLoading}
             >
               Submit
             </button>

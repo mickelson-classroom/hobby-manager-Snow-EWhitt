@@ -9,9 +9,20 @@ import "./assests/custom.scss";
 // import ToastContextProvider from "./context/ToastContext";
 import { Provider } from "react-redux";
 import store from "./app/store";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
-const queryClient = new QueryClient();
+import { toast } from "react-hot-toast";
+
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error: any) =>
+      toast.error(`Something went wrong: ${error.message}`),
+  }),
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

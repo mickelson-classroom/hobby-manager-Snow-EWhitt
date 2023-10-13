@@ -7,26 +7,28 @@ export const CommentService = {
   addComment: async (comment: IComment) => {
     const comments = await CommentService.getAllComments();
     const newComments = [...comments, comment];
-    await axios.post(`${url}comment`, newComments);
+    await axios.post(`${url}comments`, newComments);
   },
 
   getAllComments: async (): Promise<IComment[]> => {
-    const response = await axios.get(`${url}comment`);
+    const response = await axios.get(`${url}comments`);
     const comments = response.data;
 
-    try {
-      if (Array.isArray(comments)) {
-        return comments as IComment[];
-      } else {
-        // If the response is not an array, convert it to an array
+    // try {
+    //   if (Array.isArray(comments)) {
+    //     return comments as IComment[];
+    //   } else {
+    //     // If the response is not an array, convert it to an array
 
-        return [comments] as IComment[];
-      }
-    } catch (error) {
-      console.error("Error fetching comments:", error);
+    //     return [comments] as IComment[];
+    //   }
+    // } catch (error) {
+    //   console.error("Error fetching comments:", error);
 
-      throw error;
-    }
+    //   throw error;
+    // }
+
+    return comments as IComment[];
   },
 
   getCommentsByGameId: async (gameId: string): Promise<IComment[]> => {
@@ -55,6 +57,6 @@ export const CommentService = {
   deleteComment: async (commentId: number) => {
     const comments = await CommentService.getAllComments();
     const newComments = comments.filter((comment) => comment.id !== commentId);
-    await axios.post(`${url}comment`, newComments);
+    await axios.post(`${url}comments`, newComments);
   },
 };
