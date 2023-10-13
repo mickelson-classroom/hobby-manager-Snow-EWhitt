@@ -14,8 +14,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -33,6 +32,7 @@ root.render(
     {/* <ToastContextProvider> */}
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
+        <Toaster />
         <App />
       </Provider>
     </QueryClientProvider>
