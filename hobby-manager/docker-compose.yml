@@ -1,11 +1,13 @@
 version: "3"
 services:
   client:
+    restart: unless-stopped
     build: .
 
   api:
     build: ../storage-api
     container_name: ethan-storage-api
+    restart: unless-stopped
     volumes:
       - /home/ethan/data/apiStorage:/app/storage
 

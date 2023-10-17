@@ -1,5 +1,4 @@
 import { Component, ErrorInfo, ReactNode } from "react";
-import { useRouteError } from "react-router-dom";
 
 interface Props {
   children: ReactNode;

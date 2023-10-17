@@ -1,8 +1,4 @@
-import {
-  FC,
-  useEffect,
-  // useContext,
-} from "react";
+import { FC } from "react";
 import { IGame } from "../../models/games/games";
 import { CustomInput, useCustomInput } from "../../components/CustomInput";
 // import { GameContext, GameContextType } from "../../context/GameContext";

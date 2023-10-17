@@ -5,7 +5,6 @@ import { GameItem } from "./pages/GameDetails/GameDetails";
 import { GamesList } from "./pages/GamesList";
 import ErrorBoundary from "./pages/ErrorBoundary";
 import CreateGameItem from "./pages/CreateGameItem";
-import { CSSAnimation } from "./pages/CSSAnimation";
 import ReactQueryDemonstration from "./pages/ReactQueryDemonstration";
 
 export const App = () => {

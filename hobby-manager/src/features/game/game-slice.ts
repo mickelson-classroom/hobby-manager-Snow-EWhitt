@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { IGame, listOfGames } from "../../models/games/games";
 import GameService from "./gameService";
 
@@ -32,7 +32,7 @@ export const updateGame = createAsyncThunk(
   "games/updateGame",
   async (game: IGame) => {
     const items = await GameService.getAllGames();
-    const filteredItems = items.filter((item) => item.id != game.id);
+    const filteredItems = items.filter((item) => item.id !== game.id);
     const newItemList = [
       ...filteredItems,
       game

@@ -1,6 +1,5 @@
 // import { useContext, useState } from "react";
 // import { GameContext, GameContextType } from "../context/GameContext";
-import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 // import { addGame } from "../features/game/game-slice";
 import { CustomInput, useCustomInput } from "../components/CustomInput";
@@ -17,7 +16,7 @@ const CreateGameItem = () => {
 
   useEffect(() => {
     dispatch(getGames());
-  }, [])
+  }, [dispatch])
 
   const titleControl = useCustomInput("");
   const releaseControl = useCustomInput("");

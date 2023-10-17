@@ -13,7 +13,7 @@ const GameService = {
   },
   deleteGame: async (id: string) => {
     const games = await GameService.getAllGames();
-    const filteredGames = games.filter((game: IGame) => game.id != id);
+    const filteredGames = games.filter((game: IGame) => game.id !== id);
 
     await GameService.storeGames(filteredGames);
   },

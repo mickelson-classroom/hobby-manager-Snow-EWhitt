@@ -12,6 +12,10 @@ jobs:
       - name: redeploy application
         run: |
           cd hobby-manager
+
+          docker build -t ethan_eslint -f eslint.Dockerfile .
+          docker run -i --rm ethan_eslint
+
           docker compose pull
           docker compose build
           docker compose down
