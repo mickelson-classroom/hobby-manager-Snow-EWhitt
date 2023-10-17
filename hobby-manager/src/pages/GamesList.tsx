@@ -26,7 +26,7 @@ export const GamesList = () => {
 
   useEffect(() => {
     dispatch(getGames());
-  }, [dispatch]);
+  }, []);
 
   const filterControl = useFilterInput();
 
